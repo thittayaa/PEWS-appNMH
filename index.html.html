@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>บันทึกสัญญาณชีพ PEWS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f6f6; --card:#ffffff; --ink:#12302f; --muted:#5d7574; --line:#d6e0df; --brand:#0f6b66; --brand-ink:#ffffff;
+  --l0:#5c7a99; --l1:#2e9e5b; --l2:#e0b000; --l3:#d2402b; --l2t:#6b5000;
+  --l0bg:#e3eaf2; --l1bg:#e3f4ea; --l2bg:#fff3bf; --l3bg:#fadad5;
+  --chip:#eaf0ef; --chip-on:#0f6b66;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1b1b; --card:#152827; --ink:#e4efee; --muted:#93aeac; --line:#27413f; --brand:#3fb8b0; --brand-ink:#06201f;
+    --l0:#8fb0d0; --l1:#4cc27e; --l2:#f0c230; --l3:#ee6a56; --l2t:#f0c230;
+    --l0bg:#1c2d3f; --l1bg:#143826; --l2bg:#3b3207; --l3bg:#44201b;
+    --chip:#1d3331; --chip-on:#3fb8b0;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1b1b; --card:#152827; --ink:#e4efee; --muted:#93aeac; --line:#27413f; --brand:#3fb8b0; --brand-ink:#06201f;
+  --l0:#8fb0d0; --l1:#4cc27e; --l2:#f0c230; --l3:#ee6a56; --l2t:#f0c230;
+  --l0bg:#1c2d3f; --l1bg:#143826; --l2bg:#3b3207; --l3bg:#44201b;
+  --chip:#1d3331; --chip-on:#3fb8b0;
+}
+*{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans Thai","Sarabun",system-ui,sans-serif;font-size:16px;line-height:1.5;min-height:100%;padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+.wrap{max-width:640px;margin:0 auto;padding:14px 14px 0}
+h1{font-size:1.25rem;margin:4px 0 2px;font-weight:700}
+.sub{color:var(--muted);font-size:.85rem;margin:0 0 12px}
+.tabs{display:flex;gap:6px;background:var(--chip);padding:4px;border-radius:12px;margin-bottom:12px}
+.tabs button{flex:1;border:0;background:transparent;color:var(--muted);font:inherit;font-weight:500;padding:9px 4px;border-radius:9px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+section.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+section.card h2{font-size:1rem;margin:0 0 10px;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.full{grid-column:1/-1}
+label.f{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--muted);margin-bottom:3px;gap:6px}
+input[type=text],input[type=number],input[type=datetime-local],select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:9px 10px;min-height:42px}
+textarea{min-height:64px;resize:vertical}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--brand);outline-offset:1px}
+.unit{font-size:.72rem;color:var(--muted)}
+.hint{font-size:.7rem;color:var(--muted);margin-top:2px;min-height:1em}
+.sb{min-width:26px;height:22px;border-radius:6px;font-size:.78rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;padding:0 6px;background:var(--chip);color:var(--muted)}
+.sb.s0{background:var(--l0bg);color:var(--l0)} .sb.s1{background:var(--l1bg);color:var(--l1)} .sb.s2{background:var(--l2bg);color:var(--l2t)} .sb.s3{background:var(--l3bg);color:var(--l3)}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg label{flex:1 1 calc(50% - 6px);position:relative}
+.seg.three label{flex:1 1 calc(33% - 6px)}
+.seg.six label{flex:1 1 calc(16% - 6px)}
+.seg input{position:absolute;opacity:0;inset:0;cursor:pointer;width:100%;height:100%;margin:0}
+.seg span{display:block;text-align:center;background:var(--chip);border:1px solid transparent;border-radius:10px;padding:9px 6px;font-size:.86rem;min-height:42px;line-height:1.3}
+.seg input:checked+span{background:var(--chip-on);color:var(--brand-ink);font-weight:700}
+.seg input:focus-visible+span{outline:2px solid var(--brand);outline-offset:1px}
+.chk{display:flex;gap:8px;align-items:flex-start;padding:7px 0;font-size:.92rem}
+.chk input{width:20px;height:20px;margin-top:2px;accent-color:var(--brand)}
+.note{font-size:.76rem;color:var(--muted);margin:6px 2px 14px;line-height:1.45}
+.warn{background:var(--l2bg);color:var(--ink);border-radius:9px;padding:8px 10px;font-size:.82rem;margin-top:8px}
+.btn{font:inherit;font-weight:700;border:0;border-radius:12px;padding:13px 16px;cursor:pointer;background:var(--brand);color:var(--brand-ink);width:100%;min-height:48px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:var(--chip);color:var(--ink);font-weight:500}
+.btn.small{width:auto;padding:7px 12px;min-height:36px;font-size:.85rem}
+.btn.danger{background:var(--l3bg);color:var(--l3)}
+#bar{position:fixed;left:0;right:0;bottom:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:3px solid var(--line);box-shadow:0 -4px 16px rgba(0,0,0,.08);z-index:5}
+#bar .in{max-width:640px;margin:0 auto;display:flex;gap:12px;align-items:center}
+#bar .num{flex:0 0 66px;height:66px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-weight:700;background:var(--muted)}
+#bar .num b{font-size:1.9rem;line-height:1}
+#bar .num small{font-size:.62rem;opacity:.9}
+#bar .txt{flex:1;min-width:0}
+#bar .ttl{font-weight:700;font-size:.98rem}
+#bar .act{font-size:.82rem;color:var(--muted);line-height:1.35}
+#bar .parts{font-size:.74rem;color:var(--muted);margin-top:2px}
+.bg0{background:var(--l0)!important} .bg1{background:var(--l1)!important} .bg2{background:var(--l2)!important} .bg3{background:var(--l3)!important}
+#bar .num.bg2,.pill.bg2{color:#2a2100}
+#bar.l0{border-top-color:var(--l0)} #bar.l1{border-top-color:var(--l1)} #bar.l2{border-top-color:var(--l2)} #bar.l3{border-top-color:var(--l3)}
+.empty{text-align:center;color:var(--muted);padding:26px 10px;font-size:.92rem}
+.rec{border:1px solid var(--line);border-radius:12px;padding:11px;margin-bottom:9px;background:var(--card)}
+.rec .top{display:flex;gap:10px;align-items:center}
+.pill{flex:0 0 auto;min-width:44px;height:44px;border-radius:11px;color:#fff;font-weight:700;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+.rec .who{font-weight:700;font-size:.95rem}
+.rec .when{font-size:.78rem;color:var(--muted)}
+.rec .vs{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 6px}
+.vc{background:var(--chip);border-radius:7px;padding:2px 4px 2px 8px;font-size:.78rem;display:inline-flex;gap:6px;align-items:center}
+.vc b{min-width:18px;text-align:center;border-radius:5px;font-size:.72rem;padding:0 4px;background:var(--l0bg);color:var(--l0)}
+.vc.s1 b{background:var(--l1bg);color:var(--l1)} .vc.s2 b{background:var(--l2bg);color:var(--l2t)} .vc.s3 b{background:var(--l3bg);color:var(--l3)}
+.rec .lv{font-size:.8rem;font-weight:500}
+.rec .extra{font-size:.78rem;color:var(--muted);margin-top:4px}
+.rec .row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px}
+.tools{display:flex;gap:8px;margin-bottom:10px}
+.tools select{flex:1}
+.chartbox{overflow-x:auto}
+svg text{font-family:inherit}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(160px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:20px;font-size:.88rem;opacity:0;pointer-events:none;transition:opacity .2s;z-index:10;max-width:90%;text-align:center}
+#toast.on{opacity:1}
+textarea#csv{width:100%;height:120px;font-size:.75rem;margin-top:8px}
+.rrow{display:grid;grid-template-columns:1fr auto 1fr 74px 38px;gap:6px;align-items:center;margin-bottom:6px}
+.rrow input,.rrow select{min-height:38px;padding:6px 8px}
+.rrow .x{border:0;background:var(--l3bg);color:var(--l3);border-radius:8px;height:38px;font-size:1.1rem;cursor:pointer}
+.rrow2{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;font-size:.9rem}
+.rrow2 select{width:74px}
+.rhead{display:grid;grid-template-columns:1fr auto 1fr 74px 38px;gap:6px;font-size:.7rem;color:var(--muted);margin-bottom:3px}
+section.proto{border-left-width:6px}
+section.proto.p0{border-left-color:var(--l0)} section.proto.p1{border-left-color:var(--l1)} section.proto.p2{border-left-color:var(--l2)} section.proto.p3{border-left-color:var(--l3)}
+.proto .pr{font-size:.86rem;margin:4px 0}
+.proto ol{margin:4px 0 6px;padding-left:20px;font-size:.86rem}
+.proto li{margin-bottom:3px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>บันทึกสัญญาณชีพ และคะแนน PEWS</h1>
+  <p class="sub">ให้คะแนนจากค่าสัญญาณชีพตามช่วงอายุ รวม 7 พารามิเตอร์</p>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="tab-new" aria-selected="true">บันทึกใหม่</button>
+    <button role="tab" id="tab-hist" aria-selected="false">ประวัติ <span id="cnt"></span></button>
+    <button role="tab" id="tab-rules" aria-selected="false">เกณฑ์</button>
+  </div>
+
+  <!-- ===== FORM ===== -->
+  <div id="view-new">
+    <section class="card">
+      <h2>ข้อมูลผู้ป่วย</h2>
+      <div class="grid">
+        <div class="full"><label class="f" for="name">ชื่อผู้ป่วย</label><input type="text" id="name" autocomplete="off"></div>
+        <div><label class="f" for="hn">HN</label><input type="text" id="hn" autocomplete="off"></div>
+        <div><label class="f" for="base">AVPU พื้นฐาน</label>
+          <select id="base"><option value="">ไม่ระบุ</option><option>Alert</option><option>Voice</option><option>Pain</option><option>Unresponsive</option></select></div>
+        <div><label class="f" for="ay">อายุ (ปี)</label><input type="number" id="ay" inputmode="numeric" min="0" max="18" placeholder="0"></div>
+        <div><label class="f" for="am">อายุ (เดือน)</label><input type="number" id="am" inputmode="numeric" min="0" max="11" placeholder="0"></div>
+        <div class="full"><label class="f" for="when">วันเวลาที่วัด</label><input type="datetime-local" id="when"></div>
+      </div>
+      <div class="sub" style="margin:12px 0 6px">ฟอร์มที่ใช้ให้คะแนน (เลือกอัตโนมัติจากอายุ แตะเพื่อเปลี่ยนเองได้)</div>
+      <div class="seg three" id="seg-grp">
+        <label><input type="radio" name="grp" value="inf"><span>1 เดือน - 1 ปี</span></label>
+        <label><input type="radio" name="grp" value="tod"><span>1 - 5 ปี</span></label>
+        <label><input type="radio" name="grp" value="sch"><span>5 - 12 ปี</span></label>
+      </div>
+      <div class="warn" id="ageWarn" hidden></div>
+    </section>
+
+    <section class="card">
+      <h2>สัญญาณชีพ</h2>
+      <div class="grid" id="vgrid"></div>
+      <label class="chk" id="retrWrap" hidden><input type="checkbox" id="retr"><span>มี retraction (นับ RR เป็น 3 คะแนน)</span></label>
+    </section>
+
+    <section class="card">
+      <h2>ระดับความรู้สึกตัว (AVPU) <span class="sb" id="b-avpu">-</span></h2>
+      <div class="seg" id="seg-avpu"></div>
+    </section>
+
+    <section class="card">
+      <h2>อื่น ๆ (ไม่รวมในคะแนน PEWS)</h2>
+      <div class="grid">
+        <div><label class="f" for="pain">Pain scale (0-10)</label><input type="number" id="pain" inputmode="numeric" min="0" max="10"></div>
+        <div></div>
+        <div class="full"><div class="sub" style="margin:0 0 6px">Sedation score (SS)</div>
+          <div class="seg six" id="seg-sed">
+            <label><input type="radio" name="sed" value="" checked><span>-</span></label>
+            <label><input type="radio" name="sed" value="S"><span>S</span></label>
+            <label><input type="radio" name="sed" value="1"><span>1</span></label>
+            <label><input type="radio" name="sed" value="2"><span>2</span></label>
+            <label><input type="radio" name="sed" value="3"><span>3</span></label>
+            <label><input type="radio" name="sed" value="4"><span>4</span></label>
+          </div>
+        </div>
+        <div class="full"><label class="f" for="note">Interventions</label><textarea id="note"></textarea></div>
+      </div>
+    </section>
+
+    <section class="card proto" id="proto" hidden></section>
+
+    <button class="btn" id="save">บันทึกผล</button>
+    <p class="note">เครื่องมือช่วยคำนวณและบันทึกเท่านั้น ไม่ใช่การวินิจฉัย ตารางเกณฑ์ถูกถอดจากรูปฟอร์ม โปรดตรวจเทียบกับฟอร์มจริงที่แท็บ "เกณฑ์" ก่อนใช้งาน และยึดดุลยพินิจทางคลินิกกับแนวทางของหน่วยเป็นหลัก</p>
+  </div>
+
+  <!-- ===== HISTORY ===== -->
+  <div id="view-hist" hidden>
+    <div class="tools"><select id="filter" aria-label="เลือกผู้ป่วย"></select></div>
+    <section class="card" id="chartCard" hidden>
+      <h2>แนวโน้มคะแนน PEWS</h2>
+      <div class="chartbox" id="chart"></div>
+    </section>
+    <div id="list"></div>
+    <div class="tools" style="margin-top:6px">
+      <button class="btn ghost small" id="exp">ส่งออก CSV</button>
+      <button class="btn ghost small" id="clr">ล้างทั้งหมด</button>
+    </div>
+    <textarea id="csv" hidden readonly aria-label="CSV"></textarea>
+  </div>
+
+  <!-- ===== RULES ===== -->
+  <div id="view-rules" hidden>
+    <p class="note" style="margin-top:0">ช่วงค่าและคะแนนด้านล่างถอดจากรูปฟอร์ม บางช่องอาจอ่านคลาดเคลื่อน ตรวจเทียบกับฟอร์มจริงและแก้ไขได้ทันที ระบบจะบันทึกการแก้ไขไว้ในเครื่อง ช่องว่างหมายถึงไม่จำกัด</p>
+    <div id="rulesBody"></div>
+  </div>
+</div>
+
+<div id="bar" class="l0">
+  <div class="in">
+    <div class="num" id="barNum"><b>-</b><small>PEWS</small></div>
+    <div class="txt">
+      <div class="ttl" id="barTtl">เลือกช่วงอายุ</div>
+      <div class="act" id="barAct">กรอกอายุหรือเลือกฟอร์มเพื่อเริ่มคำนวณ</div>
+      <div class="parts" id="barParts"></div>
+    </div>
+  </div>
+</div>
+<div id="toast" role="status"></div>
+
+<script>
+(function(){
+  var $ = function(id){return document.getElementById(id)};
+  var KEY_REC='pews_records_v2', KEY_RULES='pews_rules_v2', KEY_SET='pews_settings_v3';
+
+  /* ---------- storage (guarded) ---------- */
+  function lsGet(k){ try{ var r=localStorage.getItem(k); return r?JSON.parse(r):null; }catch(e){ return null; } }
+  function lsSet(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+  function clone(o){ return JSON.parse(JSON.stringify(o)); }
+
+  /* ---------- parameters ---------- */
+  var PARAMS=[
+    {k:'rr',   n:'RR',   u:'/นาที', dec:0},
+    {k:'spo2', n:'SpO₂', u:'%',     dec:0},
+    {k:'temp', n:'Temp', u:'°C',    dec:1},
+    {k:'sbp',  n:'SBP',  u:'mmHg',  dec:0},
+    {k:'hr',   n:'HR',   u:'/นาที', dec:0},
+    {k:'crt',  n:'CRT',  u:'วินาที', dec:1}
+  ];
+  var PM={}; PARAMS.forEach(function(p){PM[p.k]=p;});
+
+  var GROUPS={
+    inf:{label:'1 เดือน - 1 ปี', retr:true,
+      avpu:[['Active','Active/Awake ตื่น รู้สึกตัวดี'],['Irritable','Irritable หงุดหงิด'],['Lethargic','Lethargic/Hypotonia ซึม'],['Unresp.','Unresponsive ไม่ตอบสนอง'],['Seizure','Seizure ชัก']]},
+    tod:{label:'1 - 5 ปี', retr:false,
+      avpu:[['A','A ตื่น รู้สึกตัวดี'],['V','V ตอบสนองต่อเสียง'],['P/U','P/U ตอบสนองต่อความเจ็บปวด หรือไม่ตอบสนอง']]},
+    sch:{label:'5 - 12 ปี', retr:false,
+      avpu:[['A','A ตื่น รู้สึกตัวดี'],['V','V ตอบสนองต่อเสียง'],['P/U','P/U ตอบสนองต่อความเจ็บปวด หรือไม่ตอบสนอง']]}
+  };
+  // bands are [min, max, score], inclusive, null = unbounded
+  var TEMP=[[null,35.9,1],[36,38.5,0],[38.6,null,1]];
+  var CRT=[[null,2,0],[2.1,null,1]];
+  var DEFAULT_RULES={
+    inf:{
+      rr:[[null,29,3],[30,40,0],[41,50,2],[51,null,3]],
+      spo2:[[null,79,3],[80,84,2],[85,94,1],[95,null,0]],
+      temp:TEMP, crt:CRT,
+      sbp:[[null,59,2],[60,69,1],[70,79,0],[80,99,1],[100,110,2],[111,null,3]],
+      hr:[[null,79,3],[80,99,1],[100,160,0],[161,179,1],[180,190,2],[191,null,3]],
+      avpu:[0,1,2,3,3]},
+    tod:{
+      rr:[[null,14,3],[15,19,1],[20,39,0],[40,49,1],[50,60,2],[61,null,3]],
+      spo2:[[null,84,3],[85,89,2],[90,93,1],[94,null,0]],
+      temp:TEMP, crt:CRT,
+      sbp:[[null,69,3],[70,79,2],[80,89,1],[90,109,0],[110,119,1],[120,130,2],[131,null,3]],
+      hr:[[null,59,3],[60,79,1],[80,129,0],[130,149,1],[150,170,2],[171,null,3]],
+      avpu:[0,1,3]},
+    sch:{
+      rr:[[null,9,3],[10,15,1],[16,29,0],[30,39,1],[40,50,2],[51,null,3]],
+      spo2:[[null,84,3],[85,89,2],[90,93,1],[94,null,0]],
+      temp:TEMP, crt:CRT,
+      sbp:[[null,79,3],[80,89,1],[90,119,0],[120,129,1],[130,140,2],[141,null,3]],
+      hr:[[null,49,3],[50,69,1],[70,109,0],[110,129,1],[130,150,2],[151,null,3]],
+      avpu:[0,1,3]}
+  };
+  var DEFAULT_SET={low:1, mod:4, high:6, p2:true, p3:true};
+  var LV=[
+    {en:'No risk', th:'ไม่มีความเสี่ยง', freq:'ทุก 4 ชั่วโมง', md:'Routine round/visit', mdShort:'Routine round/visit',
+      nurse:['Routine nursing care']},
+    {en:'Low risk', th:'ความเสี่ยงต่ำ', freq:'ทุก 4 ชั่วโมง', md:'Routine round/visit', mdShort:'Routine round/visit',
+      nurse:['ประเมินและประเมินซ้ำ พร้อมจัดการอาการเบื้องต้นตาม ABCDEF Model และประเมิน VS ซ้ำภายใน 1 ชม. หลังจากมี Intervention','รายงานพยาบาลหัวหน้าเวร','รายงาน Extern และ R1']},
+    {en:'Moderate risk', th:'ความเสี่ยงปานกลาง', freq:'ทุก 2 ชั่วโมง', md:'Management & treatment ภายใน 30 นาที', mdShort:'ภายใน 30 นาที',
+      nurse:['ประเมินและประเมินซ้ำ พร้อมจัดการอาการเบื้องต้นตาม ABCDEF Model','รายงานพยาบาลหัวหน้าเวร','รายงานแพทย์เจ้าของไข้หรือ Resident 1','ติดตามอาการเปลี่ยนแปลงอย่างใกล้ชิด']},
+    {en:'High risk', th:'ความเสี่ยงสูง', freq:'Continuous monitoring of vital signs', md:'Management & treatment ภายใน 15 นาที', mdShort:'ภายใน 15 นาที',
+      nurse:['ประเมินและประเมินซ้ำ พร้อมจัดการอาการเบื้องต้นตาม ABCDEF bundle','รายงานพยาบาลหัวหน้าเวรทันที','รายงานแพทย์เจ้าของไข้ หรือ Resident 3/Fellow critical care/Fellow chest/Staff ทันที','ตาม RRT','ติดตามอาการเปลี่ยนแปลงอย่างใกล้ชิด','เตรียม Emergency cart/Defibrillator']}
+  ];
+  var COLORS=['var(--l0)','var(--l1)','var(--l2t)','var(--l3)'];
+  var FILLS=['var(--l0)','var(--l1)','var(--l2)','var(--l3)'];
+
+  var mem = lsGet(KEY_REC) || [];
+  var rules = lsGet(KEY_RULES) || clone(DEFAULT_RULES);
+  var settings = lsGet(KEY_SET) || clone(DEFAULT_SET);
+  var S={grp:null, avpu:null, editGrp:'inf'};
+
+  /* ---------- helpers ---------- */
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]}); }
+  function toast(msg){ var t=$('toast'); t.textContent=msg; t.className='on'; setTimeout(function(){t.className='';},2200); }
+  function nowLocal(){ var d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,16); }
+  function fmt(ts){ try{ return new Date(ts).toLocaleString('th-TH',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}); }catch(e){ return ts; } }
+  function ageText(mo){ var y=Math.floor(mo/12), m=mo%12; return (y?y+' ปี ':'')+((m||!y)?m+' ด.':''); }
+  function pid(r){ return (r.hn||'').trim()||(r.name||'').trim()||'ไม่ระบุ'; }
+  function val(id){ var v=parseFloat($(id).value); return isNaN(v)?null:v; }
+  function pval(k){ var v=val(k); if(v===null) return null; return +v.toFixed(PM[k].dec); }
+  function ageMonths(){
+    var y=parseInt($('ay').value,10), m=parseInt($('am').value,10);
+    if(isNaN(y)&&isNaN(m)) return null;
+    return (isNaN(y)?0:y)*12+(isNaN(m)?0:m);
+  }
+  function groupForAge(mo){ return mo<12?'inf':mo<60?'tod':'sch'; }
+  function bandScore(list,v){
+    for(var i=0;i<list.length;i++){ var b=list[i];
+      if((b[0]==null||v>=b[0])&&(b[1]==null||v<=b[1])) return b[2]; }
+    return null;
+  }
+  function fmtBand(b){ return b[0]==null?'≤'+b[1]:b[1]==null?'≥'+b[0]:b[0]+'-'+b[1]; }
+
+  /* ---------- scoring ---------- */
+  function calc(){
+    if(!S.grp) return null;
+    var R=rules[S.grp], sc={}, vals={}, total=0, any3=false, filled=0;
+    PARAMS.forEach(function(p){
+      var v=pval(p.k); vals[p.k]=v;
+      if(v===null){ sc[p.k]=null; return; }
+      var s=bandScore(R[p.k],v);
+      if(p.k==='rr' && GROUPS[S.grp].retr && $('retr').checked) s=Math.max(s==null?0:s,3);
+      sc[p.k]=s; filled++;
+      if(s!=null){ total+=s; if(s>=3) any3=true; }
+    });
+    if(S.avpu!=null && R.avpu[S.avpu]!=null){
+      var a=R.avpu[S.avpu]; sc.avpu=a; filled++; total+=a; if(a>=3) any3=true;
+    } else sc.avpu=null;
+    var mp=0; for(var kk in sc){ if(sc[kk]!=null && sc[kk]>mp) mp=sc[kk]; }
+    return {sc:sc, vals:vals, total:total, any3:any3, maxP:mp, filled:filled};
+  }
+  function maxOf(sc){ var m=0; for(var k in sc){ if(sc[k]!=null && sc[k]>m) m=sc[k]; } return m; }
+  function level(total,maxP){
+    var s=settings, k=0, why='';
+    if(total>=s.high) k=3; else if(total>=s.mod) k=2; else if(total>=s.low) k=1;
+    if(s.p3 && maxP>=3 && k<3){ k=3; why='มีพารามิเตอร์ที่ได้ 3 คะแนน'; }
+    else if(s.p2 && maxP>=2 && k<2){ k=2; why='มีพารามิเตอร์ที่ได้ 2 คะแนน'; }
+    var L=LV[k];
+    return {k:k, why:why, en:L.en, th:L.th, freq:L.freq, md:L.md, mdShort:L.mdShort, nurse:L.nurse, t:L.en+' ('+L.th+')'};
+  }
+
+  /* ---------- build form pieces ---------- */
+  function buildVitals(){
+    var h='';
+    PARAMS.forEach(function(p){
+      h+='<div><label class="f" for="'+p.k+'"><span>'+p.n+' <span class="unit">'+p.u+'</span></span><span class="sb" id="b-'+p.k+'">-</span></label>'
+        +'<input type="number" id="'+p.k+'" inputmode="'+(p.dec?'decimal':'numeric')+'" step="any"><div class="hint" id="h-'+p.k+'"></div></div>';
+      if(p.k==='sbp') h+='<div><label class="f" for="dbp"><span>DBP <span class="unit">mmHg</span></span></label><input type="number" id="dbp" inputmode="numeric"><div class="hint">ไม่นับคะแนน</div></div>';
+    });
+    $('vgrid').innerHTML=h;
+  }
+  function buildAvpu(){
+    if(!S.grp){ $('seg-avpu').innerHTML='<div class="hint">เลือกช่วงอายุก่อน</div>'; return; }
+    var h='';
+    GROUPS[S.grp].avpu.forEach(function(o,i){
+      h+='<label><input type="radio" name="avpu" value="'+i+'"'+(S.avpu===i?' checked':'')+'><span>'+esc(o[1])+'</span></label>';
+    });
+    $('seg-avpu').innerHTML=h;
+  }
+  function setGroup(g){
+    if(S.grp===g) return;
+    S.grp=g; S.avpu=null;
+    var r=document.querySelector('input[name="grp"][value="'+g+'"]'); if(r) r.checked=true;
+    $('retrWrap').hidden=!GROUPS[g].retr;
+    if(!GROUPS[g].retr) $('retr').checked=false;
+    buildAvpu();
+  }
+
+  /* ---------- live render ---------- */
+  function render(){
+    var mo=ageMonths(), w=$('ageWarn');
+    if(mo!==null && (mo<1||mo>144)){ w.hidden=false; w.textContent='อายุอยู่นอกช่วงของฟอร์ม (1 เดือน - 12 ปี) ตรวจสอบก่อนใช้คะแนน'; }
+    else w.hidden=true;
+
+    var c=calc();
+    PARAMS.forEach(function(p){
+      var b=$('b-'+p.k), h=$('h-'+p.k);
+      if(!c){ b.textContent='-'; b.className='sb'; h.textContent=''; return; }
+      var s=c.sc[p.k];
+      b.className='sb'+(s!=null?' s'+s:''); b.textContent = s!=null?s:(c.vals[p.k]!==null?'?':'-');
+      var z=null; rules[S.grp][p.k].forEach(function(bd){ if(bd[2]===0 && !z) z=bd; });
+      h.textContent = z ? 'ปกติ '+fmtBand(z) : '';
+    });
+    var ba=$('b-avpu');
+    if(c && c.sc.avpu!=null){ ba.className='sb s'+c.sc.avpu; ba.textContent=c.sc.avpu; } else { ba.className='sb'; ba.textContent='-'; }
+
+    var bar=$('bar');
+    if(!c){
+      bar.className='l0'; $('barNum').className='num'; $('barNum').innerHTML='<b>-</b><small>PEWS</small>';
+      $('barTtl').textContent='เลือกช่วงอายุ'; $('barAct').textContent='กรอกอายุหรือเลือกฟอร์มเพื่อเริ่มคำนวณ'; $('barParts').textContent='';
+      $('save').disabled=true; $('proto').hidden=true; return null;
+    }
+    $('save').disabled=false;
+    if(c.filled===0){
+      bar.className='l0'; $('barNum').className='num'; $('barNum').innerHTML='<b>-</b><small>PEWS</small>';
+      $('barTtl').textContent='ยังไม่มีค่า'; $('barAct').textContent='กรอกสัญญาณชีพเพื่อคำนวณคะแนน'; $('barParts').textContent='';
+      $('proto').hidden=true; return null;
+    }
+    var lv=level(c.total,c.maxP);
+    bar.className='l'+lv.k; $('barNum').className='num bg'+lv.k;
+    $('barNum').innerHTML='<b>'+c.total+'</b><small>PEWS</small>';
+    $('barTtl').textContent=lv.en+' ('+lv.th+')';
+    $('barAct').textContent='ติดตาม '+lv.freq+' | แพทย์ '+lv.mdShort+(lv.why?' ('+lv.why+')':'');
+    var px=$('proto'); px.hidden=false; px.className='card proto p'+lv.k;
+    px.innerHTML='<h2>แนวปฏิบัติ: '+esc(lv.en)+' ('+esc(lv.th)+')</h2>'
+      +'<div class="pr"><b>ความถี่การติดตาม</b> '+esc(lv.freq)+'</div>'
+      +(lv.why?'<div class="pr"><b>เหตุผล</b> คะแนนรวม '+c.total+' และ'+esc(lv.why)+'</div>':'')
+      +'<div class="pr"><b>พยาบาล</b></div><ol>'+lv.nurse.map(function(n){return '<li>'+esc(n)+'</li>';}).join('')+'</ol>'
+      +'<div class="pr"><b>แพทย์</b> '+esc(lv.md)+'</div>';
+    var parts=PARAMS.map(function(p){ return p.n+' '+(c.sc[p.k]==null?'-':c.sc[p.k]); }).concat(['AVPU '+(c.sc.avpu==null?'-':c.sc.avpu)]);
+    $('barParts').textContent='กรอกแล้ว '+c.filled+'/7  ('+parts.join(', ')+')';
+    return {c:c, lv:lv};
+  }
+
+  /* ---------- save ---------- */
+  function save(){
+    var r=render(); if(!r){ toast('กรอกค่าอย่างน้อย 1 รายการ'); return; }
+    var c=r.c;
+    if(c.filled===0){ toast('กรอกค่าอย่างน้อย 1 รายการ'); return; }
+    var mo=ageMonths();
+    var av=S.avpu!=null?GROUPS[S.grp].avpu[S.avpu][0]:null;
+    var rec={
+      id:Date.now()+'-'+Math.floor(Math.random()*1000),
+      ts:$('when').value?new Date($('when').value).toISOString():new Date().toISOString(),
+      name:$('name').value.trim(), hn:$('hn').value.trim(), mo:mo, grp:S.grp, base:$('base').value,
+      v:{rr:c.vals.rr,spo2:c.vals.spo2,temp:c.vals.temp,sbp:c.vals.sbp,dbp:val('dbp'),hr:c.vals.hr,crt:c.vals.crt},
+      retr:$('retr').checked, avpu:av, sc:c.sc, total:c.total, any3:c.any3,
+      pain:val('pain'), sed:(document.querySelector('input[name="sed"]:checked')||{value:''}).value, note:$('note').value.trim()
+    };
+    mem.push(rec); lsSet(KEY_REC,mem);
+    PARAMS.forEach(function(p){ $(p.k).value=''; });
+    ['dbp','pain','note'].forEach(function(i){ $(i).value=''; });
+    $('retr').checked=false; S.avpu=null; buildAvpu();
+    document.querySelector('input[name="sed"][value=""]').checked=true;
+    $('when').value=nowLocal();
+    render(); counts();
+    toast('บันทึกแล้ว PEWS '+rec.total+(c.filled<7?' (กรอก '+c.filled+'/7)':''));
+  }
+
+  /* ---------- history ---------- */
+  var armed=null;
+  function counts(){ $('cnt').textContent=mem.length?'('+mem.length+')':''; }
+  function fillFilter(){
+    var cur=$('filter').value, seen={}, order=[];
+    mem.forEach(function(x){ var p=pid(x); if(!seen[p]){seen[p]=1;order.push(p);} });
+    $('filter').innerHTML='<option value="">ผู้ป่วยทั้งหมด</option>'+order.map(function(p){return '<option value="'+esc(p)+'">'+esc(p)+'</option>';}).join('');
+    if(order.indexOf(cur)>=0) $('filter').value=cur;
+  }
+  function chart(rows){
+    var card=$('chartCard');
+    if(rows.length<2){ card.hidden=true; return; }
+    card.hidden=false;
+    var data=rows.slice(-12).sort(function(a,b){return new Date(a.ts)-new Date(b.ts);});
+    var W=Math.max(320,data.length*52),H=170,pl=26,pr=12,pt=10,pb=30;
+    var maxY=Math.max(9,Math.max.apply(null,data.map(function(d){return d.total;})));
+    function X(i){ return pl+(data.length===1?0:i*(W-pl-pr)/(data.length-1)); }
+    function Y(v){ return pt+(H-pt-pb)*(1-v/maxY); }
+    var s='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" role="img" aria-label="กราฟคะแนน PEWS">';
+    var y1=settings.low, y2=settings.mod, y3=settings.high;
+    [[0,y1,'--l0bg'],[y1,y2,'--l1bg'],[y2,y3,'--l2bg'],[y3,maxY,'--l3bg']].forEach(function(b){
+      if(b[1]>b[0]) s+='<rect x="'+pl+'" y="'+Y(Math.min(b[1],maxY))+'" width="'+(W-pl-pr)+'" height="'+(Y(b[0])-Y(Math.min(b[1],maxY)))+'" fill="var('+b[2]+')"/>';
+    });
+    for(var t=0;t<=maxY;t+=2){ s+='<text x="'+(pl-6)+'" y="'+(Y(t)+4)+'" font-size="10" text-anchor="end" fill="var(--muted)">'+t+'</text>'; }
+    s+='<polyline points="'+data.map(function(d,i){return X(i)+','+Y(d.total);}).join(' ')+'" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/>';
+    data.forEach(function(d,i){
+      var k=level(d.total,maxOf(d.sc)).k;
+      s+='<circle cx="'+X(i)+'" cy="'+Y(d.total)+'" r="6" fill="'+FILLS[k]+'" stroke="var(--card)" stroke-width="1.5"/>';
+      s+='<text x="'+X(i)+'" y="'+(Y(d.total)-10)+'" font-size="10" text-anchor="middle" font-weight="700" fill="var(--ink)">'+d.total+'</text>';
+      s+='<text x="'+X(i)+'" y="'+(H-10)+'" font-size="9.5" text-anchor="middle" fill="var(--muted)">'+esc(new Date(d.ts).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}))+'</text>';
+    });
+    $('chart').innerHTML=s+'</svg>';
+  }
+  function chip(label,value,score){
+    return '<span class="vc s'+(score==null?0:score)+'">'+esc(label+' '+value)+(score!=null?'<b>'+score+'</b>':'')+'</span>';
+  }
+  function renderHist(){
+    fillFilter();
+    var f=$('filter').value;
+    var rows=mem.filter(function(x){return !f||pid(x)===f;}).sort(function(a,b){return new Date(b.ts)-new Date(a.ts);});
+    chart(f?rows:[]);
+    if(!rows.length){ $('list').innerHTML='<div class="empty">ยังไม่มีบันทึก<br>กรอกข้อมูลที่แท็บ "บันทึกใหม่" แล้วกดบันทึกผล</div>'; return; }
+    $('list').innerHTML=rows.map(function(x){
+      var lv=level(x.total,maxOf(x.sc)), ch='';
+      PARAMS.forEach(function(p){ if(x.v[p.k]!=null) ch+=chip(p.n,x.v[p.k],x.sc[p.k]); });
+      if(x.v.dbp!=null && x.v.sbp!=null) ch=ch.replace('SBP '+x.v.sbp,'BP '+x.v.sbp+'/'+x.v.dbp);
+      if(x.avpu) ch+=chip('AVPU',x.avpu,x.sc.avpu);
+      var ex=[];
+      if(x.retr) ex.push('retraction');
+      if(x.pain!=null) ex.push('Pain '+x.pain);
+      if(x.sed) ex.push('SS '+x.sed);
+      if(x.note) ex.push(x.note);
+      return '<div class="rec"><div class="top"><div class="pill bg'+lv.k+'">'+x.total+'</div>'
+        +'<div><div class="who">'+esc(x.name||'ไม่ระบุชื่อ')+(x.hn?' (HN '+esc(x.hn)+')':'')+'</div>'
+        +'<div class="when">'+esc(fmt(x.ts))+(x.mo!=null?' | อายุ '+esc(ageText(x.mo)):'')+' | ฟอร์ม '+esc(GROUPS[x.grp]?GROUPS[x.grp].label:'')+'</div></div></div>'
+        +'<div class="vs">'+ch+'</div>'
+        +(ex.length?'<div class="extra">'+esc(ex.join(' | '))+'</div>':'')
+        +'<div class="row"><div class="lv" style="color:'+COLORS[lv.k]+'">'+esc(lv.t)+'</div>'
+        +'<button class="btn small danger" data-del="'+esc(x.id)+'">ลบ</button></div></div>';
+    }).join('');
+  }
+  function toCSV(){
+    var h=['datetime','name','hn','age_months','form','rr','spo2','temp','sbp','dbp','hr','crt','avpu','rr_s','spo2_s','temp_s','sbp_s','hr_s','crt_s','avpu_s','pews_total','pain','sedation','interventions'];
+    var q=function(v){ v=v==null?'':String(v); return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v; };
+    var out=[h.join(',')];
+    mem.slice().sort(function(a,b){return new Date(a.ts)-new Date(b.ts);}).forEach(function(x){
+      out.push([x.ts,x.name,x.hn,x.mo,x.grp,x.v.rr,x.v.spo2,x.v.temp,x.v.sbp,x.v.dbp,x.v.hr,x.v.crt,x.avpu,
+        x.sc.rr,x.sc.spo2,x.sc.temp,x.sc.sbp,x.sc.hr,x.sc.crt,x.sc.avpu,x.total,x.pain,x.sed,x.note].map(q).join(','));
+    });
+    return out.join('\n');
+  }
+
+  /* ---------- rules editor ---------- */
+  function opt(n,sel){ return '<option value="'+n+'"'+(n===sel?' selected':'')+'>'+n+'</option>'; }
+  function renderRules(){
+    var g=S.editGrp, R=rules[g], h='';
+    h+='<div class="seg three" style="margin-bottom:12px">'+Object.keys(GROUPS).map(function(k){
+      return '<label><input type="radio" name="rgrp" value="'+k+'"'+(k===g?' checked':'')+'><span>'+GROUPS[k].label+'</span></label>';
+    }).join('')+'</div>';
+    PARAMS.forEach(function(p){
+      h+='<section class="card"><h2><span>'+p.n+' <span class="unit">'+p.u+'</span></span></h2>'
+        +'<div class="rhead"><span>ตั้งแต่</span><span></span><span>ถึง</span><span>คะแนน</span><span></span></div>';
+      R[p.k].forEach(function(b,i){
+        h+='<div class="rrow" data-k="'+p.k+'" data-i="'+i+'">'
+          +'<input type="number" step="any" inputmode="decimal" data-f="0" value="'+(b[0]==null?'':b[0])+'" placeholder="ไม่จำกัด" aria-label="ค่าต่ำสุด">'
+          +'<span>-</span>'
+          +'<input type="number" step="any" inputmode="decimal" data-f="1" value="'+(b[1]==null?'':b[1])+'" placeholder="ไม่จำกัด" aria-label="ค่าสูงสุด">'
+          +'<select data-f="2" aria-label="คะแนน">'+[0,1,2,3].map(function(n){return opt(n,b[2]);}).join('')+'</select>'
+          +'<button class="x" data-rm aria-label="ลบช่วง">×</button></div>';
+      });
+      h+='<button class="btn ghost small" data-add="'+p.k+'">เพิ่มช่วง</button></section>';
+    });
+    h+='<section class="card"><h2>AVPU</h2>'+GROUPS[g].avpu.map(function(o,i){
+      return '<div class="rrow2"><span>'+esc(o[1])+'</span><select data-av="'+i+'" aria-label="คะแนน">'+[0,1,2,3].map(function(n){return opt(n,R.avpu[i]);}).join('')+'</select></div>';
+    }).join('')+'</section>';
+    h+='<section class="card"><h2>เกณฑ์ตามคะแนนรวม (จากแนวปฏิบัติของหน่วย)</h2>'
+      +'<div class="grid">'
+      +'<div><label class="f" for="st-low">เขียว (Low) ตั้งแต่</label><input type="number" id="st-low" value="'+settings.low+'" inputmode="numeric"></div>'
+      +'<div><label class="f" for="st-mod">เหลือง (Moderate) ตั้งแต่</label><input type="number" id="st-mod" value="'+settings.mod+'" inputmode="numeric"></div>'
+      +'<div><label class="f" for="st-high">แดง (High) ตั้งแต่</label><input type="number" id="st-high" value="'+settings.high+'" inputmode="numeric"></div></div>'
+      +'<label class="chk"><input type="checkbox" id="st-p2"'+(settings.p2?' checked':'')+'><span>พารามิเตอร์ใดได้ 2 คะแนน ให้ขึ้นระดับเหลือง</span></label>'
+      +'<label class="chk"><input type="checkbox" id="st-p3"'+(settings.p3?' checked':'')+'><span>พารามิเตอร์ใดได้ 3 คะแนน ให้ขึ้นระดับแดง</span></label></section>';
+    h+='<button class="btn ghost" id="resetRules">คืนค่าตารางและเกณฑ์เป็นค่าเริ่มต้น</button>';
+    $('rulesBody').innerHTML=h;
+  }
+  var resetArmed=false;
+  function onRulesChange(e){
+    var t=e.target, g=S.editGrp;
+    if(t.name==='rgrp'){ S.editGrp=t.value; renderRules(); return; }
+    var row=t.closest('.rrow');
+    if(row && t.getAttribute('data-f')!==null){
+      var k=row.getAttribute('data-k'), i=+row.getAttribute('data-i'), f=+t.getAttribute('data-f');
+      if(f===2) rules[g][k][i][2]=parseInt(t.value,10);
+      else { var v=parseFloat(t.value); rules[g][k][i][f]=isNaN(v)?null:v; }
+      lsSet(KEY_RULES,rules); render(); return;
+    }
+    if(t.getAttribute('data-av')!==null){ rules[g].avpu[+t.getAttribute('data-av')]=parseInt(t.value,10); lsSet(KEY_RULES,rules); render(); return; }
+    if(t.id==='st-low'||t.id==='st-mod'||t.id==='st-high'){
+      var n=parseInt(t.value,10); if(isNaN(n)) return;
+      settings[t.id.slice(3)]=n; lsSet(KEY_SET,settings); render(); return;
+    }
+    if(t.id==='st-p2'||t.id==='st-p3'){ settings[t.id.slice(3)]=t.checked; lsSet(KEY_SET,settings); render(); }
+  }
+  function onRulesClick(e){
+    var g=S.editGrp, b=e.target.closest('button'); if(!b) return;
+    if(b.hasAttribute('data-add')){ rules[g][b.getAttribute('data-add')].push([null,null,0]); lsSet(KEY_RULES,rules); renderRules(); render(); return; }
+    if(b.hasAttribute('data-rm')){
+      var row=b.closest('.rrow'); rules[g][row.getAttribute('data-k')].splice(+row.getAttribute('data-i'),1);
+      lsSet(KEY_RULES,rules); renderRules(); render(); return;
+    }
+    if(b.id==='resetRules'){
+      if(!resetArmed){ resetArmed=true; b.textContent='แตะอีกครั้งเพื่อยืนยันการรีเซ็ต'; setTimeout(function(){ resetArmed=false; var x=$('resetRules'); if(x) x.textContent='คืนค่าตารางและเกณฑ์เป็นค่าเริ่มต้น'; },3000); return; }
+      rules=clone(DEFAULT_RULES); settings=clone(DEFAULT_SET); lsSet(KEY_RULES,rules); lsSet(KEY_SET,settings); resetArmed=false; renderRules(); render(); toast('รีเซ็ตแล้ว');
+    }
+  }
+
+  /* ---------- tabs ---------- */
+  function tab(w){
+    ['new','hist','rules'].forEach(function(k){
+      $('view-'+k).hidden = k!==w;
+      $('tab-'+k).setAttribute('aria-selected', String(k===w));
+    });
+    $('bar').style.display = w==='new' ? '' : 'none';
+    $('toast').style.bottom = w==='new' ? '' : '24px';
+    if(w==='hist') renderHist();
+    if(w==='rules') renderRules();
+    window.scrollTo(0,0);
+  }
+
+  /* ---------- wire up ---------- */
+  buildVitals(); buildAvpu(); counts();
+  $('when').value=nowLocal();
+  var vn=$('view-new');
+  function onForm(e){
+    var t=e.target;
+    if(t.name==='grp'){ setGroup(t.value); }
+    else if(t.name==='avpu'){ S.avpu=parseInt(t.value,10); }
+    else if(t.id==='ay'||t.id==='am'){
+      var mo=ageMonths(); if(mo!==null) setGroup(groupForAge(mo));
+    }
+    render();
+  }
+  vn.addEventListener('input',onForm); vn.addEventListener('change',onForm);
+  $('save').addEventListener('click',save);
+  $('tab-new').addEventListener('click',function(){tab('new');});
+  $('tab-hist').addEventListener('click',function(){tab('hist');});
+  $('tab-rules').addEventListener('click',function(){tab('rules');});
+  $('filter').addEventListener('change',renderHist);
+  $('rulesBody').addEventListener('change',onRulesChange);
+  $('rulesBody').addEventListener('click',onRulesClick);
+  $('list').addEventListener('click',function(e){
+    var b=e.target.closest('[data-del]'); if(!b) return;
+    var id=b.getAttribute('data-del');
+    if(armed!==id){ armed=id; b.textContent='แตะอีกครั้งเพื่อลบ'; setTimeout(function(){ if(armed===id){ armed=null; b.textContent='ลบ'; } },3000); return; }
+    mem=mem.filter(function(x){return x.id!==id;}); lsSet(KEY_REC,mem); armed=null; counts(); renderHist();
+  });
+  var clrArmed=false;
+  $('clr').addEventListener('click',function(){
+    var b=$('clr');
+    if(!clrArmed){ clrArmed=true; b.textContent='แตะอีกครั้งเพื่อล้างทั้งหมด'; setTimeout(function(){ clrArmed=false; b.textContent='ล้างทั้งหมด'; },3000); return; }
+    mem=[]; lsSet(KEY_REC,mem); clrArmed=false; b.textContent='ล้างทั้งหมด'; counts(); renderHist();
+  });
+  $('exp').addEventListener('click',function(){
+    if(!mem.length){ toast('ยังไม่มีข้อมูลให้ส่งออก'); return; }
+    var tx=toCSV(), ta=$('csv'); ta.value=tx; ta.hidden=false; ta.focus(); ta.select();
+    try{ navigator.clipboard.writeText(tx).then(function(){toast('คัดลอก CSV แล้ว');},function(){toast('เลือกข้อความด้านล่างแล้วคัดลอก');}); }
+    catch(err){ toast('เลือกข้อความด้านล่างแล้วคัดลอก'); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>
